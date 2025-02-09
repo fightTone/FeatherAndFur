@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: rabbit-farm-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/app  # Changed from . to ./
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true  # Add this for better file watching
+      - WATCHPACK_POLLING=true    # Add this for better file watching
+    command: npm run dev
