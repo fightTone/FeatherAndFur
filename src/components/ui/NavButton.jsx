@@ -4,7 +4,7 @@ const NavButton = ({ icon, text, onClick, active }) => (
     <button
         onClick={onClick}
         className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
-        active ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50'
+        active ? 'bg-primary-accent text-white' : 'text-gray-300 hover:bg-gray-800'
         }`}
     >
         {icon}

@@ -1,12 +1,23 @@
 // src/styles/theme.jsx
 export const theme = {
     colors: {
-        primary: 'bg-blue-600',
-        secondary: 'bg-green-500',
-        accent: 'bg-purple-500',
+        // Main colors - using standard Tailwind colors
+        primary: 'bg-green-600',  // Instead of sage-600
+        secondary: 'bg-stone-200',
+        accent: 'bg-orange-400',
+        
+        // Text colors
         text: {
-        primary: 'text-gray-900',
-        secondary: 'text-gray-600',
+          primary: 'text-gray-800',
+          secondary: 'text-gray-600',
+          light: 'text-gray-400'
+        },
+        
+        // Background variations
+        background: {
+          light: 'bg-stone-50',
+          default: 'bg-white',
+          dark: 'bg-stone-100'
         }
     },
     containers: {

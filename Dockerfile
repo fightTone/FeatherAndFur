@@ -2,13 +2,17 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
 
-# Install dependencies with legacy peer deps flag
 RUN npm install --legacy-peer-deps
 
-# Copy project files including config files
 COPY . .
 
+# Add these environment variables for Vite
+ENV HOST=0.0.0.0
+ENV PORT=5173
+
 EXPOSE 5173
+
+# Use this command to run Vite with the correct host
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

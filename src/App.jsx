@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import Navigation from './components/layout/Navigation';
-import Footer from './components/layout/Footer';
 import HomeContent from './pages/Home';
 import ShopContent from './pages/Shop';
 import RecipesContent from './pages/Recipes';
 import EducationContent from './pages/Education';
+import Footer from './components/layout/Footer';
+import { theme } from './styles/theme';
+import './App.css';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
+import ErrorBoundary from './components/ErrorBoundary';
 
-const App = () => {
+function AppContent() {
   const [activeTab, setActiveTab] = useState('home');
+  const { isDarkMode } = useTheme();
+  const currentTheme = theme.colors[isDarkMode ? 'dark' : 'light'];
 
   const renderContent = () => {
-    switch(activeTab) {
+    switch (activeTab) {
       case 'home':
         return <HomeContent />;
       case 'shop':
@@ -20,25 +26,29 @@ const App = () => {
       case 'education':
         return <EducationContent />;
       default:
-        return <Homepage />;
+        return <HomeContent />;
     }
   };
 
   return (
-
-    <div className="min-h-screen flex flex-col">  {/* Add flex flex-col */}
-      {/* Navigation */}
+    <div className={`min-h-screen w-full ${currentTheme.background.dark}`}>
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
-
-      {/* Main Content */}
-      <main className="flex-grow max-w-6xl mx-auto px-4 py-8"> {/* Add flex-grow */}
+      <main className={`w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-16 mb-24 ${currentTheme.text.primary}`}>
         {renderContent()}
       </main>
-
-      {/* Footer */}
       <Footer />
     </div>
   );
-};
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <ErrorBoundary>
+        <AppContent />
+      </ErrorBoundary>
+    </ThemeProvider>
+  );
+}
 
 export default App;
