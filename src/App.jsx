@@ -9,6 +9,10 @@ import { theme } from './styles/theme';
 import './App.css';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import ErrorBoundary from './components/ErrorBoundary';
+import AdminContent from './pages/Admin';
+import { ContentProvider } from './context/ContentContext';
+import { AuthProvider } from './context/AuthContext';
+import AuthModal from './components/auth/AuthModal';
 
 function AppContent() {
   const [activeTab, setActiveTab] = useState('home');
@@ -25,6 +29,8 @@ function AppContent() {
         return <RecipesContent />;
       case 'education':
         return <EducationContent />;
+      case 'admin':
+        return <AdminContent />;
       default:
         return <HomeContent />;
     }
@@ -33,6 +39,7 @@ function AppContent() {
   return (
     <div className={`min-h-screen w-full ${currentTheme.background.dark}`}>
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
+      <AuthModal />
       <main className={`w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-16 mb-24 ${currentTheme.text.primary}`}>
         {renderContent()}
       </main>
@@ -44,9 +51,13 @@ function AppContent() {
 function App() {
   return (
     <ThemeProvider>
-      <ErrorBoundary>
-        <AppContent />
-      </ErrorBoundary>
+      <AuthProvider>
+        <ContentProvider>
+          <ErrorBoundary>
+            <AppContent />
+          </ErrorBoundary>
+        </ContentProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

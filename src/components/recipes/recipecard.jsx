@@ -1,21 +1,44 @@
 import React from 'react';
-import { ChefHat } from 'lucide-react';
 import { Card, CardContent } from '../ui/card';
+import { Clock, BarChart } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
+import { theme } from '../../styles/theme';
 
-const RecipeCard = ({ title, difficulty, time, description }) => (
-    <Card>
-        <CardContent className="p-6">
-            <div className="h-48 bg-gray-200 mb-4 rounded-md flex items-center justify-center">
-                <ChefHat className="w-12 h-12 text-gray-400" />
+const RecipeCard = ({ title, difficulty, time, description, image }) => {
+  const { isDarkMode } = useTheme();
+  const currentTheme = theme.colors[isDarkMode ? 'dark' : 'light'];
+
+  return (
+    <Card className="h-full">
+      <CardContent className="flex flex-col h-full p-0">
+        <div className="w-full h-56 overflow-hidden rounded-t-lg">
+          <img 
+            src={image} 
+            alt={title}
+            className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+          />
+        </div>
+        <div className="flex-1 flex flex-col p-6">
+          <h3 className={`text-xl font-bold mb-4 ${currentTheme.text.primary}`}>
+            {title}
+          </h3>
+          <p className={`${currentTheme.text.secondary} text-sm leading-relaxed mb-4 flex-grow`}>
+            {description}
+          </p>
+          <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-700">
+            <div className="flex items-center">
+              <BarChart className="w-4 h-4 mr-2 text-green-500" />
+              <span className={`text-sm ${currentTheme.text.secondary}`}>{difficulty}</span>
             </div>
-            <h3 className="text-xl font-semibold">{title}</h3>
-            <div className="flex space-x-4 mt-2 text-sm text-gray-600">
-                <span>Difficulty: {difficulty}</span>
-                <span>Time: {time}</span>
+            <div className="flex items-center">
+              <Clock className="w-4 h-4 mr-2 text-green-500" />
+              <span className={`text-sm ${currentTheme.text.secondary}`}>{time}</span>
             </div>
-            <p className="mt-2 text-gray-600">{description}</p>
-        </CardContent>
+          </div>
+        </div>
+      </CardContent>
     </Card>
-);
+  );
+};
 
 export default RecipeCard;
