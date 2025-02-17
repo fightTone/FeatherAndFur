@@ -28,7 +28,9 @@ const AuthModal = () => {
       <div className={`${currentTheme.card.base} p-6 rounded-lg w-96 relative`}>
         <button
           onClick={() => setShowAuthModal(false)}
-          className="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-700 transition-colors"
+          className={`absolute top-2 right-2 p-2 rounded-full ${
+            isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-200'
+          } transition-colors ${currentTheme.text.primary}`}
         >
           <X className="w-4 h-4" />
         </button>
@@ -43,7 +45,14 @@ const AuthModal = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
-            className={`w-full p-2 rounded-md ${currentTheme.card.base} border border-gray-600`}
+            className={`
+              w-full p-2 rounded-md
+              ${isDarkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-50 text-gray-900'}
+              ${isDarkMode ? 'border-gray-600' : 'border-gray-300'}
+              border
+              focus:ring-2 focus:ring-primary-accent focus:border-transparent
+              ${isDarkMode ? 'placeholder-gray-400' : 'placeholder-gray-500'}
+            `}
           />
           
           {error && (
